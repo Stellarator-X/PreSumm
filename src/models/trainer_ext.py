@@ -5,6 +5,7 @@ import torch
 from tensorboardX import SummaryWriter
 
 import distributed
+import eval
 from models.reporter_ext import ReportMgr, Statistics
 from others.logging import logger
 from others.utils import test_rouge, rouge_results_to_str
@@ -289,6 +290,8 @@ class Trainer(object):
         if (step != -1 and self.args.report_rouge):
             rouges = test_rouge(self.args.temp_dir, can_path, gold_path)
             logger.info('Rouges at step %d \n%s' % (step, rouge_results_to_str(rouges)))
+            similarities = eval.cosine_similarity(gold, pred)
+            logger.info('Cosine similarity at step %d \n%s' % (step, similarities))            
         self._report_step(0, step, valid_stats=stats)
 
         return stats
