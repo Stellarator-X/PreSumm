@@ -7,6 +7,7 @@ scipy
 pandas
 sentence-transformers
 sklearn
+rouge
 nltk
 statistics
 transformers
