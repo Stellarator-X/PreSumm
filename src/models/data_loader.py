@@ -30,8 +30,8 @@ class Batch(object):
             tgt = torch.tensor(self._pad(pre_tgt, 0))
 
             segs = torch.tensor(self._pad(pre_segs, 0))
-            mask_src = torch.logical_not(torch.logical_not(src), dtype=torch.int8)
-            mask_tgt = torch.logical_not(torch.logical_not(tgt), dtype = torch.int8)
+            mask_src = torch.logical_not(torch.logical_not(src))
+            mask_tgt = torch.logical_not(torch.logical_not(tgt))
 
 
             clss = torch.tensor(self._pad(pre_clss, -1))
