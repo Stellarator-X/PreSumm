@@ -3,8 +3,7 @@ numpy
 pytorch-transformers
 tensorboardX
 torch
-scipy
-pandas
+scipy                                                                                                                               
 sentence-transformers
 sklearn
 rouge
