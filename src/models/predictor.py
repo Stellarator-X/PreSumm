@@ -328,8 +328,7 @@ class Translator(object):
 
             # Append last prediction.
             alive_seq = torch.cat(
-                [alive_seq.index_select(0, torch.tensor(select_indices, dtype = torch.int8)),
-                 topk_ids.view(-1, 1)], -1)
+                [alive_seq.index_select(0, torch.tensor(select_indices)), topk_ids.view(-1, 1)], -1)
 
             is_finished = topk_ids.eq(self.end_token)
             if step + 1 == max_length:
