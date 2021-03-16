@@ -361,16 +361,16 @@ class Translator(object):
                 if len(non_finished) == 0:
                     break
                 # Remove finished batches for the next step.
-                topk_log_probs = topk_log_probs.index_select(0, non_finished)
-                batch_index = batch_index.index_select(0, non_finished)
-                batch_offset = batch_offset.index_select(0, non_finished)
-                alive_seq = predictions.index_select(0, non_finished) \
+                topk_log_probs = topk_log_probs.index_select(0, non_finished.type(torch.LongTensor).to(device))
+                batch_index = batch_index.index_select(0, non_finished.type(torch.LongTensor).to(device))
+                batch_offset = batch_offset.index_select(0, non_finished.type(torch.LongTensor).to(device))
+                alive_seq = predictions.index_select(0, non_finished.type(torch.LongTensor).to(device)) \
                     .view(-1, alive_seq.size(-1))
             # Reorder states.
             select_indices = batch_index.view(-1)
-            src_features = src_features.index_select(0, select_indices)
+            src_features = src_features.index_select(0, select_indices.type(torch.LongTensor).to(device))
             dec_states.map_batch_fn(
-                lambda state, dim: state.index_select(dim, select_indices))
+                lambda state, dim: state.index_select(dim, select_indices.type(torch.LongTensor).to(device)))
 
         return results
 
